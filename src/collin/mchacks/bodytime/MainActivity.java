@@ -1,9 +1,13 @@
 package collin.mchacks.bodytime;
 
+import java.util.Calendar;
+
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -23,6 +27,9 @@ import android.widget.TimePicker;
 
 public class MainActivity extends Activity implements OnClickListener {
 	LinearLayout layout;
+	AlarmManager morningAlarm;
+	AlarmManager nightAlarm;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,7 +43,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	     alarm.setOnClickListener(this);
 	     
 	     layout = (LinearLayout)findViewById(R.id.layout1);
-	 
+	    morningAlarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+	    nightAlarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
 	}
 
 	@Override
@@ -53,7 +62,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch(arg0.getId()){
 		case R.id.alarm:
-			
+			Calendar morn = Calendar.getInstance();
+			Calendar night = Calendar.getInstance();
 			layout.setGravity(Gravity.CENTER_HORIZONTAL);
 			
 			TextView alarmSet = new TextView(this);
@@ -72,6 +82,10 @@ public class MainActivity extends Activity implements OnClickListener {
 			
 			TimePicker openTime = new TimePicker(this);
 			layout.addView(openTime);
+			morn.set(Calendar.HOUR_OF_DAY, openTime.getCurrentHour());
+		    morn.set(Calendar.MINUTE, openTime.getCurrentMinute());
+		    morn.set(Calendar.SECOND, 0);
+		    morn.set(Calendar.MILLISECOND, 0);
 			
 			TextView alarmC = new TextView(this);
 			alarmC.setText("Closing:");
@@ -83,6 +97,10 @@ public class MainActivity extends Activity implements OnClickListener {
 			TimePicker closeTime = new TimePicker(this);
 			closeTime.setPadding(0,0,0,85);
 			layout.addView(closeTime);
+			night.set(Calendar.HOUR_OF_DAY, closeTime.getCurrentHour());
+		    night.set(Calendar.MINUTE, closeTime.getCurrentMinute());
+		    night.set(Calendar.SECOND, 0);
+		    night.set(Calendar.MILLISECOND, 0);
 			
 			RelativeLayout.LayoutParams rel_btn = new RelativeLayout.LayoutParams(
 		            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -95,7 +113,14 @@ public class MainActivity extends Activity implements OnClickListener {
 			set.setTextColor(Color.WHITE);
 			set.setBackgroundResource(R.drawable.fadebutton);
 			layout.addView(set);
-			//set.setOnClickListener();
+			set.setOnClickListener(new OnClickListener() {           
+
+				  @Override
+				  public void onClick(View v) 
+				  {
+				      
+				  }    
+				});
 					break;
 		case R.id.gymfind:
 			break;
