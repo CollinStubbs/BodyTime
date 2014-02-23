@@ -1,12 +1,16 @@
 package collin.mchacks.bodytime;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,8 +31,13 @@ import android.widget.TimePicker;
 
 public class MainActivity extends Activity implements OnClickListener {
 	LinearLayout layout;
-	AlarmManager morningAlarm;
-	AlarmManager nightAlarm;
+	
+	TimePicker openTime;
+	TimePicker myTimePicker;
+    TimePickerDialog timePickerDialog;
+
+    final static int RQS_1 = 1;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +48,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		 TextView title = (TextView) findViewById(R.id.title);
 	     title.setTypeface(t);
 	     
-	     Button alarm = (Button)findViewById(R.id.alarm);
-	     alarm.setOnClickListener(this);
+	     Button al = (Button)findViewById(R.id.al);
+	     al.setOnClickListener(this);
 	     
-	     layout = (LinearLayout)findViewById(R.id.layout1);
-	    morningAlarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-	    nightAlarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
+	    layout = (LinearLayout)findViewById(R.id.layout1);
+	
 	}
 
 	@Override
@@ -55,53 +62,41 @@ public class MainActivity extends Activity implements OnClickListener {
 		return true;
 	}
 
-	@SuppressLint({ "ResourceAsColor", "NewApi" })
+//	@SuppressLint({ "ResourceAsColor", "NewApi" })
 	@Override
 	public void onClick(View arg0) {
+		
 		layout.removeAllViewsInLayout();
 		// TODO Auto-generated method stub
 		switch(arg0.getId()){
-		case R.id.alarm:
-			Calendar morn = Calendar.getInstance();
-			Calendar night = Calendar.getInstance();
+		case R.id.al:
+	
+			
 			layout.setGravity(Gravity.CENTER_HORIZONTAL);
 			
 			TextView alarmSet = new TextView(this);
-			alarmSet.setText("What time does your\n gym open and close?");
-			alarmSet.setTextColor(R.color.black);
+			alarmSet.setText("When are you going \nto go to the gym?");
+			alarmSet.setTextColor(Color.BLACK);
 			alarmSet.setTextSize(22);
-			alarmSet.setPadding(40,20,0,20);
+			alarmSet.setPadding(80,20,0,120);
 			layout.addView(alarmSet);
 			
-			TextView alarmO = new TextView(this);
-			alarmO.setText("Opening:");
-			alarmO.setTextColor(R.color.black);
-			alarmO.setTextSize(17);
-			alarmO.setPadding(20,20,0,10);
-			layout.addView(alarmO);
 			
-			TimePicker openTime = new TimePicker(this);
+			openTime = new TimePicker(this);
 			layout.addView(openTime);
-			morn.set(Calendar.HOUR_OF_DAY, openTime.getCurrentHour());
-		    morn.set(Calendar.MINUTE, openTime.getCurrentMinute());
-		    morn.set(Calendar.SECOND, 0);
-		    morn.set(Calendar.MILLISECOND, 0);
 			
 			TextView alarmC = new TextView(this);
-			alarmC.setText("Closing:");
-			alarmC.setTextColor(R.color.black);
+			alarmC.setText(" ");
+			alarmC.setTextColor(Color.BLACK);
 			alarmC.setTextSize(17);
-			alarmC.setPadding(20,20,0,10);
+			alarmC.setPadding(20,20,0,90);
 			layout.addView(alarmC);
 			
-			TimePicker closeTime = new TimePicker(this);
-			closeTime.setPadding(0,0,0,85);
-			layout.addView(closeTime);
-			night.set(Calendar.HOUR_OF_DAY, closeTime.getCurrentHour());
-		    night.set(Calendar.MINUTE, closeTime.getCurrentMinute());
-		    night.set(Calendar.SECOND, 0);
-		    night.set(Calendar.MILLISECOND, 0);
 			
+		    
+
+		 
+		
 			RelativeLayout.LayoutParams rel_btn = new RelativeLayout.LayoutParams(
 		            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			
@@ -118,13 +113,19 @@ public class MainActivity extends Activity implements OnClickListener {
 				  @Override
 				  public void onClick(View v) 
 				  {
+					  Intent i = new Intent(AlarmClock.ACTION_SET_ALARM); 
+					  i.putExtra(AlarmClock.EXTRA_MESSAGE, "GET TO THE GYM... NOW"); 
+					  i.putExtra(AlarmClock.EXTRA_HOUR, openTime.getCurrentHour()); 
+					  i.putExtra(AlarmClock.EXTRA_MINUTES, openTime.getCurrentMinute()); 
+					  startActivity(i); 
 				      
 				  }    
 				});
-					break;
+				break;
 		case R.id.gymfind:
 			break;
 		}
+		
 	}
-
+ 
 }

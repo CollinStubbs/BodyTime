@@ -43,7 +43,7 @@
             android:background="@null"/>
 	    <Button
 				android:tag="tab0"
-				android:id="@+id/alarm"
+				android:id="@+id/al"
 				android:text="Alarm"
 				android:textSize="22sp"
 				android:background="@null"
@@ -87,6 +87,9 @@
             android:layout_width="wrap_content"
             android:background="@color/white"/>
 	    </TabWidget>
+
+	    
+
    		<FrameLayout android:id="@android:id/tabcontent"
                  android:layout_height="match_parent" 
                  android:layout_width="fill_parent"
