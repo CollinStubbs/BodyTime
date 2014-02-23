@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.Menu;
@@ -59,7 +60,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			alarmSet.setText("What time does your\n gym open and close?");
 			alarmSet.setTextColor(R.color.black);
 			alarmSet.setTextSize(22);
-			alarmSet.setPadding(25,20,0,20);
+			alarmSet.setPadding(40,20,0,20);
 			layout.addView(alarmSet);
 			
 			TextView alarmO = new TextView(this);
@@ -87,12 +88,12 @@ public class MainActivity extends Activity implements OnClickListener {
 		            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			
 			Button set = new Button(this);
-			set.setPadding(10, 10, 10, 10);
+			set.setPadding(30, 20, 30, 20);
 			set.setLayoutParams(rel_btn);
-			set.setBackgroundColor(R.color.title_blue);
-			set.setTextColor(R.color.white);
 			set.setTextSize(20);
 			set.setText("Set Reminder Alarm");
+			set.setTextColor(Color.WHITE);
+			set.setBackgroundResource(R.drawable.fadebutton);
 			layout.addView(set);
 			//set.setOnClickListener();
 					break;
