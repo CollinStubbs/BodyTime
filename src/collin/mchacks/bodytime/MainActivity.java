@@ -108,10 +108,6 @@ EditText toAdd;
 			layout.addView(alarmC);
 			
 			
-		    
-
-		 
-		
 			RelativeLayout.LayoutParams rel_btn = new RelativeLayout.LayoutParams(
 		            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			
@@ -169,7 +165,8 @@ EditText toAdd;
 			break;
 		case R.id.buddy:
 			layout.setGravity(Gravity.CENTER_HORIZONTAL);
-			
+			RelativeLayout.LayoutParams rel_btn1 = new RelativeLayout.LayoutParams(
+		            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			TextView broset = new TextView(this);
 			broset.setText("Input the bro's phonenumber below. This bro is a last measure and will recieve a text when you're over 5 km's away from the gym when the alarm goes off.");
 			broset.setTextColor(Color.BLACK);
@@ -179,18 +176,28 @@ EditText toAdd;
 			
 			Button submit = new Button(this);
 			submit.setText("Submit your bro.");
+			submit.setLayoutParams(rel_btn1);
 			submit.setTextColor(Color.BLACK);
 			submit.setBackgroundResource(R.drawable.fadebutton);
-			layout.addView(submit);
+			
+			TextView alar = new TextView(this);
+			alar.setText(" ");
+			alar.setTextColor(Color.BLACK);
+			alar.setTextSize(17);
+			alar.setPadding(20,20,0,90);
+			
+			
 			toAdd = new EditText(this);
 			toAdd.setInputType(InputType.TYPE_CLASS_NUMBER);
 			layout.addView(toAdd);
+			layout.addView(alar);
+			layout.addView(submit);
 			submit.setOnClickListener(new OnClickListener() {           
 
 				  @Override
 				  public void onClick(View v) 
 				  {
-					  if(toAdd.getText().toString() == ""){
+					  if(toAdd.getText().toString() == "" || (toAdd.getText().toString()).length() != 10){
 						  Toast.makeText(getApplicationContext(), "That's not your bro's number.",
 								   Toast.LENGTH_LONG).show();
 						  
