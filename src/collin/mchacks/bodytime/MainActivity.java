@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import com.google.android.gms.location.LocationClient;
 
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.annotation.SuppressLint;
@@ -18,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.telephony.TelephonyManager;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -127,21 +129,26 @@ public class MainActivity extends Activity implements OnClickListener {
 					  i.putExtra(AlarmClock.EXTRA_MINUTES, min); 
 					  startActivity(i); 
 					  mCurrentLocation = new Location("you");
-					  mCurrentLocation = mLocationClient.getLastLocation();
-					  if(mCurrentLocation == null){
-						  Toast.makeText(getApplicationContext(), "NULL",
-								   Toast.LENGTH_LONG).show();
-					  }
+					  Location aloc = new Location("mcgill");
+					  aloc.setLatitude(45.504813);
+					  aloc.setLongitude(-73.576215);
+					 // mCurrentLocation = mLocationClient.getLastLocation();
+					  //if(mCurrentLocation == null){
+					//	  Toast.makeText(getApplicationContext(), "NULL",
+					//			   Toast.LENGTH_LONG).show();
+					 // }
 					  
 					  Location locationb = new Location("the gym");
 					  locationb.setLatitude(
 							  45.501399);
 					  locationb.setLongitude(-73.571194);
-					  float distance = mCurrentLocation.distanceTo(locationb);
+					  float distance = aloc.distanceTo(locationb);
 					  if(distance>5000){
+						  TelephonyManager tMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+						  String mPhoneNumber = tMgr.getLine1Number();
+						  Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( "sms:" + mPhoneNumber ) );
+						  intent.putExtra( "sms_body", "HAH, over 5 km's from the gym? Stay average." ); startActivity( intent );
 						  
-						  Toast.makeText(getApplicationContext(), "HAH, over 5 km's from the gym? Stay average.",
-								   Toast.LENGTH_LONG).show();
 					  }else{
 						  Toast.makeText(getApplicationContext(), "You're so close! Don't Give up!",
 								   Toast.LENGTH_LONG).show();
