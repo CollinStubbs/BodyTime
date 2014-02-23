@@ -1,6 +1,9 @@
 package collin.mchacks.bodytime;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import com.google.android.gms.location.LocationClient;
@@ -8,6 +11,7 @@ import com.google.android.gms.location.LocationClient;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.AlarmClock;
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
@@ -41,10 +45,13 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener {
 	LinearLayout layout;
 	int hour, min;
+	 Timer timer;
+	 Calendar cal;
 	TimePicker openTime;
 	TimePicker myTimePicker;
     TimePickerDialog timePickerDialog;
     private LocationClient mLocationClient;
+    Location locationb;
     private Location mCurrentLocation;
 int bropho;
 EditText toAdd;
@@ -55,6 +62,7 @@ EditText toAdd;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		 Typeface t = Typeface.createFromAsset(getAssets(),
 	               "KiloGram_KG.otf");
 		 TextView title = (TextView) findViewById(R.id.title);
@@ -131,31 +139,18 @@ EditText toAdd;
 					  i.putExtra(AlarmClock.EXTRA_HOUR, hour); 
 					  i.putExtra(AlarmClock.EXTRA_MINUTES, min); 
 					  startActivity(i); 
-					  mCurrentLocation = new Location("you");
-					  Location aloc = new Location("mcgill");
-					  aloc.setLatitude(45.504813);
-					  aloc.setLongitude(-73.576215);
-					 // mCurrentLocation = mLocationClient.getLastLocation();
-					  //if(mCurrentLocation == null){
-					//	  Toast.makeText(getApplicationContext(), "NULL",
-					//			   Toast.LENGTH_LONG).show();
-					 // }
 					  
-					  Location locationb = new Location("the gym");
-					  locationb.setLatitude(
-							  45.501399);
-					  locationb.setLongitude(-73.571194);
-					  float distance = aloc.distanceTo(locationb);
-					  if(distance>5000){
-						  TelephonyManager tMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-						  String mPhoneNumber = tMgr.getLine1Number();
-						  Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( "sms:" + mPhoneNumber ) );
-						  intent.putExtra( "sms_body", "HAH, over 5 km's from the gym? Stay average." ); startActivity( intent );
-						  
-					  }else{
-						  Toast.makeText(getApplicationContext(), "You're so close! Don't Give up!",
-								   Toast.LENGTH_LONG).show();
-					  }
+					  cal = Calendar.getInstance();
+					  cal.set(Calendar.HOUR, hour);
+					  cal.set(Calendar.MINUTE, min);
+					  cal.set(Calendar.SECOND, 10);
+					  Date time = cal.getTime();
+					  Toast.makeText(getApplicationContext(), time.toString(),
+							   Toast.LENGTH_LONG).show();
+					  timer = new Timer();
+					  timer.schedule(new RemindTask(), time);
+					  
+					 
 					  
 				      
 				  }    
@@ -213,5 +208,40 @@ EditText toAdd;
 		}
 		
 	}
- 
+	class RemindTask extends TimerTask {
+        public void run() {
+        	Looper.prepare();
+        	Toast.makeText(getApplicationContext(), "You'gtdeytdededeyte! Don't Give up!",
+					   Toast.LENGTH_LONG).show();
+        	 mCurrentLocation = new Location("you");
+			  Location aloc = new Location("mcgill");
+			  aloc.setLatitude(45.504813);
+			  aloc.setLongitude(-73.576215);
+			 // mCurrentLocation = mLocationClient.getLastLocation();
+			  //if(mCurrentLocation == null){
+			//	  Toast.makeText(getApplicationContext(), "NULL",
+			//			   Toast.LENGTH_LONG).show();
+			 // }
+			  //9054397240
+			  locationb = new Location("gym");
+			  locationb.setLatitude(45.501399);
+			  locationb.setLongitude(-77.571194);
+			  float distance = aloc.distanceTo(locationb);
+			  if(distance>5000){
+				  TelephonyManager tMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+				  String mPhoneNumber = tMgr.getLine1Number();
+				  Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( "sms:" + mPhoneNumber ) );
+				  intent.putExtra( "sms_body", "HAH, over 5 km's from the gym? Stay average." ); startActivity( intent );
+				  if((bropho+"").length()>0){
+					  Intent intent2 = new Intent( Intent.ACTION_VIEW, Uri.parse( "sms:" + bropho ) );
+					  intent2.putExtra( "sms_body", "Dear bro, I was supposed to be closer to the gym at this point. Please make sure I meet my daily gains quota. Thanks." ); startActivity( intent2 );
+				  }
+			  }else{
+				  Toast.makeText(getApplicationContext(), "You're so close! Don't Give up!",
+						   Toast.LENGTH_LONG).show();
+			  }
+        	
+            timer.cancel(); //Terminate the timer thread
+        }
+    }
 }
