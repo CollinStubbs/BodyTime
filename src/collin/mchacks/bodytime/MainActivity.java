@@ -3,6 +3,9 @@ package collin.mchacks.bodytime;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+import com.google.android.gms.location.LocationClient;
+
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.annotation.SuppressLint;
@@ -26,15 +29,18 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 
 
 public class MainActivity extends Activity implements OnClickListener {
 	LinearLayout layout;
-	
+	int hour, min;
 	TimePicker openTime;
 	TimePicker myTimePicker;
     TimePickerDialog timePickerDialog;
+    private LocationClient mLocationClient;
+    private Location mCurrentLocation;
 
     final static int RQS_1 = 1;
 	
@@ -113,11 +119,34 @@ public class MainActivity extends Activity implements OnClickListener {
 				  @Override
 				  public void onClick(View v) 
 				  {
+					  hour = openTime.getCurrentHour();
+					  min = openTime.getCurrentMinute();
 					  Intent i = new Intent(AlarmClock.ACTION_SET_ALARM); 
-					  i.putExtra(AlarmClock.EXTRA_MESSAGE, "GET TO THE GYM... NOW"); 
-					  i.putExtra(AlarmClock.EXTRA_HOUR, openTime.getCurrentHour()); 
-					  i.putExtra(AlarmClock.EXTRA_MINUTES, openTime.getCurrentMinute()); 
+					  i.putExtra(AlarmClock.EXTRA_MESSAGE, "Time to go to the gym!"); 
+					  i.putExtra(AlarmClock.EXTRA_HOUR, hour); 
+					  i.putExtra(AlarmClock.EXTRA_MINUTES, min); 
 					  startActivity(i); 
+					  mCurrentLocation = new Location("you");
+					  mCurrentLocation = mLocationClient.getLastLocation();
+					  if(mCurrentLocation == null){
+						  Toast.makeText(getApplicationContext(), "NULL",
+								   Toast.LENGTH_LONG).show();
+					  }
+					  
+					  Location locationb = new Location("the gym");
+					  locationb.setLatitude(
+							  45.501399);
+					  locationb.setLongitude(-73.571194);
+					  float distance = mCurrentLocation.distanceTo(locationb);
+					  if(distance>5000){
+						  
+						  Toast.makeText(getApplicationContext(), "HAH, over 5 km's from the gym? Stay average.",
+								   Toast.LENGTH_LONG).show();
+					  }else{
+						  Toast.makeText(getApplicationContext(), "You're so close! Don't Give up!",
+								   Toast.LENGTH_LONG).show();
+					  }
+					  
 				      
 				  }    
 				});
