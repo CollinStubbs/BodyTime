@@ -53,7 +53,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private LocationClient mLocationClient;
     Location locationb;
     private Location mCurrentLocation;
-int bropho;
+String bropho;
 EditText toAdd;
     final static int RQS_1 = 1;
 	
@@ -143,7 +143,7 @@ EditText toAdd;
 					  cal = Calendar.getInstance();
 					  cal.set(Calendar.HOUR, hour);
 					  cal.set(Calendar.MINUTE, min);
-					  cal.set(Calendar.SECOND, 10);
+					  cal.set(Calendar.SECOND, 5);
 					  Date time = cal.getTime();
 					  Toast.makeText(getApplicationContext(), time.toString(),
 							   Toast.LENGTH_LONG).show();
@@ -198,7 +198,7 @@ EditText toAdd;
 						  
 					  }else{
 					  
-						  bropho = Integer.parseInt(toAdd.getText().toString());
+						  bropho = toAdd.getText().toString();
 					  }
 				  }});
 			
@@ -230,9 +230,9 @@ EditText toAdd;
 			  if(distance>5000){
 				  TelephonyManager tMgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 				  String mPhoneNumber = tMgr.getLine1Number();
-				  Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( "sms:" + mPhoneNumber ) );
-				  intent.putExtra( "sms_body", "HAH, over 5 km's from the gym? Stay average." ); startActivity( intent );
-				  if((bropho+"").length()>0){
+				  Toast.makeText(getApplicationContext(), "HAH, over 5 km's from the gym? Stay average.",
+						   Toast.LENGTH_LONG).show();
+				  if((bropho).length()>0){
 					  Intent intent2 = new Intent( Intent.ACTION_VIEW, Uri.parse( "sms:" + bropho ) );
 					  intent2.putExtra( "sms_body", "Dear bro, I was supposed to be closer to the gym at this point. Please make sure I meet my daily gains quota. Thanks." ); startActivity( intent2 );
 				  }
