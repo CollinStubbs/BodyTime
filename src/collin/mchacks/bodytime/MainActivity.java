@@ -79,7 +79,14 @@ EditText toAdd;
 	     gyms.setOnClickListener(this);
 	     
 	    layout = (LinearLayout)findViewById(R.id.layout1);
-	
+	    
+	    TextView main = new  TextView(this);
+	    main.setPadding(25,75,15,0);
+	    main.setText("\tYou wake up, look outside, and it's a beautiful day. You should spend it doing something with your family, right? WRONG, you should spend it GOING TO THE GYM. It's always a perfect day FOR THE GYM, and we're here to help you remember that.");
+	    main.setTextColor(Color.BLACK);
+	    main.setTypeface(null, Typeface.BOLD_ITALIC);
+	    main.setTextSize(20);
+	    layout.addView(main);
 	}
 
 	@Override
@@ -181,6 +188,36 @@ EditText toAdd;
 			submit.setTextColor(Color.BLACK);
 			submit.setBackgroundResource(R.drawable.fadebutton);
 			
+			TextView alarC = new TextView(this);
+			alarC.setText(" ");
+			alarC.setTextColor(Color.BLACK);
+			alarC.setTextSize(17);
+			alarC.setPadding(20,20,0,90);
+			
+			
+			Button submit2 = new Button(this);
+			submit2.setText("Clear your bro.");
+			submit2.setLayoutParams(rel_btn1);
+			submit2.setTextColor(Color.BLACK);
+			submit2.setBackgroundResource(R.drawable.fadebutton);
+			
+			submit2.setOnClickListener(new OnClickListener() {           
+
+				  @Override
+				  public void onClick(View v) 
+				  {
+					  if(bropho == ""){
+						  Toast.makeText(getApplicationContext(), "Bro cleared.",
+								   Toast.LENGTH_LONG).show();
+						  
+					  }else{
+					  
+						  bropho = "";
+						  Toast.makeText(getApplicationContext(), "Bro cleared.",
+								   Toast.LENGTH_LONG).show();
+					  }
+				  }});
+			
 			TextView alar = new TextView(this);
 			alar.setText(" ");
 			alar.setTextColor(Color.BLACK);
@@ -193,6 +230,8 @@ EditText toAdd;
 			layout.addView(toAdd);
 			layout.addView(alar);
 			layout.addView(submit);
+			layout.addView(alarC);
+			layout.addView(submit2);
 			submit.setOnClickListener(new OnClickListener() {           
 
 				  @Override
@@ -205,6 +244,8 @@ EditText toAdd;
 					  }else{
 					  
 						  bropho = toAdd.getText().toString();
+						  Toast.makeText(getApplicationContext(), "Bro added successfully.",
+								   Toast.LENGTH_LONG).show();
 					  }
 				  }});
 			

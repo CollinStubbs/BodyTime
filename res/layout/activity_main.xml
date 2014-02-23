@@ -46,7 +46,7 @@
 				android:id="@+id/al"
 				android:text="Alarm"
 				android:textSize="22sp"
-				android:background="@null"
+				android:background="@drawable/blue_highlight"
 				android:gravity="center"
 				android:textColor="@color/white"
 				android:layout_width="fill_parent"
@@ -69,7 +69,7 @@
 	    <Button
 	        android:layout_width="fill_parent"
 	        android:layout_height="65dp"
-	        android:background="@null"
+				android:background="@drawable/blue_highlight"
 	        android:gravity="center"
 	        android:tag="tab1"
 	        android:id="@+id/gymfind"
@@ -94,7 +94,7 @@
 	    <Button
 	        android:layout_width="fill_parent"
 	        android:layout_height="65dp"
-	        android:background="@null"
+			android:background="@drawable/blue_highlight"
 	        android:gravity="center"
 	        android:tag="tab1"
 	        android:id="@+id/buddy"
