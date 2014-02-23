@@ -20,11 +20,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.telephony.TelephonyManager;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
@@ -43,7 +46,8 @@ public class MainActivity extends Activity implements OnClickListener {
     TimePickerDialog timePickerDialog;
     private LocationClient mLocationClient;
     private Location mCurrentLocation;
-
+int bropho;
+EditText toAdd;
     final static int RQS_1 = 1;
 	
 	
@@ -58,6 +62,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	     
 	     Button al = (Button)findViewById(R.id.al);
 	     al.setOnClickListener(this);
+	     
+	     Button bro = (Button) findViewById(R.id.buddy);
+	     bro.setOnClickListener(this);
 	     
 	    layout = (LinearLayout)findViewById(R.id.layout1);
 	
@@ -159,6 +166,42 @@ public class MainActivity extends Activity implements OnClickListener {
 				});
 				break;
 		case R.id.gymfind:
+			break;
+		case R.id.buddy:
+			layout.setGravity(Gravity.CENTER_HORIZONTAL);
+			
+			TextView broset = new TextView(this);
+			broset.setText("Input the bro's phonenumber below. This bro is a last measure and will recieve a text when you're over 5 km's away from the gym when the alarm goes off.");
+			broset.setTextColor(Color.BLACK);
+			broset.setTextSize(18);
+			broset.setPadding(80,20,0,120);
+			layout.addView(broset);
+			
+			Button submit = new Button(this);
+			submit.setText("Submit your bro.");
+			submit.setTextColor(Color.BLACK);
+			submit.setBackgroundResource(R.drawable.fadebutton);
+			layout.addView(submit);
+			toAdd = new EditText(this);
+			toAdd.setInputType(InputType.TYPE_CLASS_NUMBER);
+			layout.addView(toAdd);
+			submit.setOnClickListener(new OnClickListener() {           
+
+				  @Override
+				  public void onClick(View v) 
+				  {
+					  if(toAdd.getText().toString() == ""){
+						  Toast.makeText(getApplicationContext(), "That's not your bro's number.",
+								   Toast.LENGTH_LONG).show();
+						  
+					  }else{
+					  
+						  bropho = Integer.parseInt(toAdd.getText().toString());
+					  }
+				  }});
+			
+			
+			
 			break;
 		}
 		

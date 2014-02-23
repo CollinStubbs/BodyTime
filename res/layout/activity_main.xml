@@ -86,7 +86,33 @@
             android:layout_height="2dp"
             android:layout_width="wrap_content"
             android:background="@color/white"/>
+	    <View
+            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:background="@null"/>
+
+	    <Button
+	        android:layout_width="fill_parent"
+	        android:layout_height="65dp"
+	        android:background="@null"
+	        android:gravity="center"
+	        android:tag="tab1"
+	        android:id="@+id/buddy"
+	        android:text="Add a\n Bro"
+	        android:textColor="@color/white"
+	        android:textSize="22sp" />
+
+	    <View
+            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:background="@null"/>
+	    <View
+	        android:paddingLeft="-3dp"
+            android:layout_height="2dp"
+            android:layout_width="wrap_content"
+            android:background="@color/white"/>
 	    </TabWidget>
+	    
 
 	    
 
