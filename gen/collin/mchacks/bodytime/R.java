@@ -227,12 +227,13 @@ containing a value of this type.
         public static final int mainborder=0x7f02001e;
     }
     public static final class id {
-        public static final int action_settings=0x7f05000a;
+        public static final int action_settings=0x7f05000b;
         public static final int al=0x7f050006;
         public static final int buddy=0x7f050008;
         public static final int gymfind=0x7f050007;
         public static final int hybrid=0x7f050004;
         public static final int layout1=0x7f050009;
+        public static final int map=0x7f05000a;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
         public static final int satellite=0x7f050002;
@@ -244,6 +245,7 @@ containing a value of this type.
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
+        public static final int maps=0x7f030001;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;

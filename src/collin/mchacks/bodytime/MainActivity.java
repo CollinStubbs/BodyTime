@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.text.InputType;
 import android.view.Gravity;
@@ -73,6 +74,9 @@ EditText toAdd;
 	     
 	     Button bro = (Button) findViewById(R.id.buddy);
 	     bro.setOnClickListener(this);
+	     
+	     Button gyms = (Button) findViewById(R.id.gymfind);
+	     gyms.setOnClickListener(this);
 	     
 	    layout = (LinearLayout)findViewById(R.id.layout1);
 	
@@ -157,6 +161,8 @@ EditText toAdd;
 				});
 				break;
 		case R.id.gymfind:
+			Intent intent6 = new Intent(arg0.getContext(), maps.class);
+			startActivityForResult(intent6, 0);
 			break;
 		case R.id.buddy:
 			layout.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -233,8 +239,10 @@ EditText toAdd;
 				  Toast.makeText(getApplicationContext(), "HAH, over 5 km's from the gym? Stay average.",
 						   Toast.LENGTH_LONG).show();
 				  if((bropho).length()>0){
-					  Intent intent2 = new Intent( Intent.ACTION_VIEW, Uri.parse( "sms:" + bropho ) );
-					  intent2.putExtra( "sms_body", "Dear bro, I was supposed to be closer to the gym at this point. Please make sure I meet my daily gains quota. Thanks." ); startActivity( intent2 );
+					  SmsManager smsManager = SmsManager.getDefault();
+					  smsManager.sendTextMessage(bropho, null, "Dear bro, I was supposed to be closer to the gym at this point. Please make sure I meet my daily gains quota. Thanks.", null, null);
+					//  Intent intent2 = new Intent( Intent.ACTION_VIEW, Uri.parse( "sms:" + bropho ) );
+					  //intent2.putExtra( "sms_body", "Dear bro, I was supposed to be closer to the gym at this point. Please make sure I meet my daily gains quota. Thanks." ); startActivity( intent2 );
 				  }
 			  }else{
 				  Toast.makeText(getApplicationContext(), "You're so close! Don't Give up!",
